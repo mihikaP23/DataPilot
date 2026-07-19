@@ -1,0 +1,229 @@
+/* ==========================================================
+   InsightForge Glassmorphism Theme
+========================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+html, body, [class*="css"]{
+    font-family: "Poppins", sans-serif;
+}
+
+/* Background */
+
+.stApp{
+    background: linear-gradient(
+        135deg,
+        #EEF2FF,
+        #F8FAFC,
+        #E0F2FE
+    );
+}
+
+/* Sidebar */
+
+[data-testid="stSidebar"]{
+    background: rgba(15,23,42,0.95);
+    backdrop-filter: blur(18px);
+}
+
+[data-testid="stSidebar"] *{
+    color:white;
+}
+
+/* Headers */
+
+h1{
+    color:#1E3A8A;
+    font-weight:700;
+}
+
+h2{
+    color:#2563EB;
+    font-weight:600;
+}
+
+h3{
+    color:#1D4ED8;
+}
+
+/* Glass Cards */
+
+.glass-card{
+
+    background: rgba(255,255,255,0.30);
+
+    backdrop-filter: blur(18px);
+
+    -webkit-backdrop-filter: blur(18px);
+
+    border-radius:18px;
+
+    border:1px solid rgba(255,255,255,0.35);
+
+    padding:25px;
+
+    margin-bottom:20px;
+
+    box-shadow:0 8px 32px rgba(31,38,135,0.15);
+
+}
+
+/* Metrics */
+
+[data-testid="metric-container"]{
+
+    background:rgba(255,255,255,0.28);
+
+    backdrop-filter:blur(16px);
+
+    border-radius:18px;
+
+    padding:18px;
+
+    border:1px solid rgba(255,255,255,.35);
+
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+
+}
+
+/* Buttons */
+
+.stButton>button{
+
+    border-radius:14px;
+
+    border:none;
+
+    color:white;
+
+    font-weight:600;
+
+    background:linear-gradient(
+        90deg,
+        #2563EB,
+        #3B82F6
+    );
+
+    transition:.3s;
+
+    padding:12px;
+
+}
+
+.stButton>button:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:0 8px 25px rgba(37,99,235,.35);
+
+}
+
+/* Selectbox */
+
+.stSelectbox>div>div{
+
+    border-radius:12px;
+
+}
+
+/* Dataframe */
+
+[data-testid="stDataFrame"]{
+
+    border-radius:16px;
+
+    overflow:hidden;
+
+}
+
+/* Tabs */
+
+.stTabs [role="tab"]{
+
+    border-radius:12px;
+
+    padding:10px 20px;
+
+}
+
+/* Success */
+
+.stSuccess{
+
+    border-radius:14px;
+
+}
+
+/* Warning */
+
+.stWarning{
+
+    border-radius:14px;
+
+}
+
+/* Info */
+
+.stInfo{
+
+    border-radius:14px;
+
+}
+
+/* Expander */
+
+.streamlit-expanderHeader{
+
+    font-weight:600;
+
+}
+
+/* Slider */
+
+.stSlider{
+
+    padding-top:10px;
+
+}
+
+/* Download Button */
+
+.stDownloadButton>button{
+
+    border-radius:14px;
+
+    background:#059669;
+
+    color:white;
+
+    border:none;
+
+}
+
+.stDownloadButton>button:hover{
+
+    background:#047857;
+
+}
+
+/* Scrollbar */
+
+::-webkit-scrollbar{
+
+    width:10px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#94A3B8;
+
+    border-radius:8px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:transparent;
+
+}
