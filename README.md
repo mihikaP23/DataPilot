@@ -1,242 +1,150 @@
-# 📊 InsightForge – AI-Powered Business Analytics Platform
+# DataPilot – A Generative AI-Powered Business Intelligence Assistant
+
+DataPilot is a Generative AI-powered Business Intelligence assistant designed to simplify data analysis and help users extract meaningful insights from structured datasets. It combines automated data preprocessing, Exploratory Data Analysis (EDA), interactive dashboards, AI-generated business insights, forecasting, and report generation within an interactive application.
 
 ## Overview
 
-InsightForge is an AI-powered Business Analytics Platform that enables users to upload CSV or Excel datasets and automatically perform data cleaning, exploratory data analysis (EDA), interactive dashboard generation, AI-powered business insights, trend forecasting, and professional PDF report generation.
+Analyzing business data manually can be time-consuming, especially for users without technical expertise. DataPilot streamlines this process by allowing users to upload datasets, automatically process the data, explore visual patterns, and obtain AI-generated insights to support data-driven decision-making.
 
-The platform simplifies the complete data analytics workflow, helping users transform raw data into meaningful business insights through automation and machine learning.
+## Features
 
----
+- **Data Upload:** Upload datasets for analysis.
+- **Automated Data Cleaning:** Handle missing values, duplicate records, and data preprocessing.
+- **Exploratory Data Analysis (EDA):** Explore statistical summaries, distributions, correlations, and trends.
+- **Interactive Dashboards:** Generate visualizations and KPIs to understand business performance.
+- **Generative AI Insights:** Generate data-driven insights, summaries, recommendations, and answers to analytical queries using an LLM.
+- **Forecasting:** Perform predictive analysis using Machine Learning techniques.
+- **Report Generation:** Generate analytical reports summarizing dataset characteristics, findings, and insights.
 
-# Features
+## System Workflow
 
-### Data Upload
-- Upload CSV and Excel datasets
-- Automatic dataset validation
-- Support for multiple business datasets
+1. Upload the dataset.
+2. Perform automated data cleaning and preprocessing.
+3. Explore the dataset through EDA.
+4. Generate interactive dashboards and visualizations.
+5. Obtain AI-powered insights and recommendations.
+6. Perform forecasting where applicable.
+7. Generate analytical reports.
 
-### Data Cleaning
-- Missing value handling
-- Duplicate removal
-- Automatic data type correction
-- Dataset quality summary
+## Tech Stack
 
-### Exploratory Data Analysis (EDA)
-- Statistical summary
-- Correlation matrix
-- Missing values report
-- Dataset overview
+| Technology | Purpose |
+|---|---|
+| Python | Core programming language |
+| Streamlit | Interactive application interface |
+| Pandas | Data processing and manipulation |
+| NumPy | Numerical computations |
+| Matplotlib / Plotly | Data visualization |
+| Scikit-learn | Machine Learning and forecasting |
+| Groq API | Generative AI-powered analysis |
+| LLaMA 3.3 70B Versatile | Language model for AI insights |
+| ReportLab | PDF report generation |
 
-### Interactive Dashboard
-- KPI Cards
-- Bar Charts
-- Line Charts
-- Scatter Plots
-- Dynamic chart configuration using Plotly
+## Project Structure
 
-### AI Business Insights
-- AI-generated dataset analysis
-- Business recommendations
-- Trend interpretation
-- Executive summary generation using Groq/OpenAI
-
-### Forecasting
-- Linear Regression-based trend prediction
-- Model performance metrics
-- Future trend analysis
-
-### PDF Report Generation
-- Professional analytics report
-- Dataset overview
-- Cleaning summary
-- EDA summary
-- AI-generated insights
-- Forecasting results
-
----
-
-# Tech Stack
-
-## Frontend
-- Streamlit
-
-## Backend
-- Python
-
-## Data Analysis
-- Pandas
-- NumPy
-
-## Data Visualization
-- Plotly
-- Matplotlib
-
-## Machine Learning
-- Scikit-learn
-- Linear Regression
-
-## AI Integration
-- Groq API
-- OpenAI API
-
-## Report Generation
-- ReportLab
-
----
-
-# Workflow
-
-```
-Upload Dataset
-
-↓
-
-Automatic Data Cleaning
-
-↓
-
-Exploratory Data Analysis (EDA)
-
-↓
-
-Interactive Dashboard
-
-↓
-
-AI Business Insights
-
-↓
-
-Machine Learning Forecasting
-
-↓
-
-PDF Report Generation
-```
-
----
-
-# Project Structure
-
-```
-InsightForge/
-
-│── app.py
-│── requirements.txt
-│── README.md
-│── .gitignore
-
+```text
+DataPilot/
+│
+├── app.py
+├── app_pages/
+│   ├── overview.py
+│   ├── eda.py
+│   ├── dashboard.py
+│   ├── ai.py
+│   ├── forecast.py
+│   └── report.py
+│
 ├── assets/
-│     └── style.css
-
-├── data/
-
-├── modules/
-│     ├── upload.py
-│     ├── cleaning.py
-│     ├── eda.py
-│     ├── dashboard.py
-│     ├── ai_insights.py
-│     ├── forecasting.py
-│     └── report.py
-
-├── pages/
-│     ├── overview.py
-│     ├── eda_page.py
-│     ├── dashboard_page.py
-│     ├── ai_page.py
-│     ├── forecast_page.py
-│     └── report_page.py
-
-└── reports/
+│   └── style.css
+│
+├── reports/
+├── requirements.txt
+├── .gitignore
+└── README.md
 ```
 
----
+## Installation and Setup
 
-# Key Features Demonstrated
-
-- Data Cleaning & Preprocessing
-- Exploratory Data Analysis (EDA)
-- Interactive Business Dashboards
-- KPI Generation
-- AI-powered Business Insights
-- Machine Learning Forecasting
-- Automated PDF Reporting
-- Modular Python Application Development
-
----
-
-# Installation
-
-Clone the repository
+### 1. Clone the repository
 
 ```bash
-git clone https://github.com/mihikaP23/InsightForge.git
+git clone https://github.com/mihikaP23/DataPilot.git
 ```
 
-Move into the project directory
+### 2. Navigate to the project directory
 
 ```bash
-cd InsightForge
+cd DataPilot
 ```
 
-Install dependencies
+### 3. Create a virtual environment
+
+```bash
+python -m venv venv
+```
+
+### 4. Activate the virtual environment
+
+**Windows:**
+
+```bash
+venv\Scripts\activate
+```
+
+**Linux/macOS:**
+
+```bash
+source venv/bin/activate
+```
+
+### 5. Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Run the application
+### 6. Configure the Groq API Key
+
+Create a `.env` file in the root directory and add:
+
+```env
+GROQ_API_KEY=your_groq_api_key
+```
+
+Replace `your_groq_api_key` with your actual API key.
+
+### 7. Run the application
 
 ```bash
 streamlit run app.py
 ```
 
----
+## Generative AI Integration
 
-# Screenshots
+DataPilot integrates the Groq API with the LLaMA 3.3 70B Versatile model to analyze dataset summaries and generate natural-language business insights.
 
-## Overview
+The AI component helps users interpret analytical results, identify meaningful patterns, summarize observations, and obtain recommendations based on the provided dataset context.
 
-![Overview](screenshots/overview.png)
+## Machine Learning
 
-## Dashboard
+DataPilot incorporates Machine Learning-based forecasting to explore predictive trends in data. Linear Regression is used for forecasting in the implemented model, with model performance evaluated using relevant regression metrics.
 
-![Dashboard](screenshots/dashboard.png)
+## Future Scope
 
-![Dashboard](screenshots/dashboard2.png)
+- Integration of additional Machine Learning models.
+- Enhanced natural-language querying capabilities.
+- Advanced predictive analytics.
+- Support for additional dataset formats and analytical workflows.
+- Improved AI-driven business decision support.
 
-## AI Insights
-
-![AI](screenshots/ai_insights.png)
-
-## Forecasting
-
-![Forecast](screenshots/forecasting.png)
-
-## PDF Report
-
-![PDF](screenshots/report.png)
-
----
-
-# Future Enhancements
-
-- Multiple Machine Learning Models
-- Dataset Comparison
-- Data Quality Score
-- AI Chat with Dataset
-- Advanced Dashboard Customization
-- User Authentication
-- Streamlit Cloud Deployment
-
----
-
-# Author
+## Author
 
 **Mihika Pargai**
 
-B.Tech Computer Science (Hons.) – Data Science  
-University of Petroleum and Energy Studies (UPES), Dehradun
+B.Tech – Computer Science Engineering (Data Science)
+
+GitHub: [mihikaP23](https://github.com/mihikaP23)
 
 ---
+
+*DataPilot – Turning data into meaningful insights.*
