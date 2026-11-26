@@ -1,3 +1,4 @@
+
 import os
 import streamlit as st
 
@@ -12,9 +13,7 @@ from modules.cleaning import clean_data
 # ==========================
 from app_pages.overview import show_overview
 from app_pages.eda_page import show_eda
-from app_pages.dashboard_page import show_dashboard
 from app_pages.ai_page import show_ai_page
-from app_pages.forecast_page import show_forecasting
 from app_pages.report_page import show_report_page
 
 
@@ -25,7 +24,7 @@ def load_css():
     css_path = os.path.join("assets", "style.css")
 
     if os.path.exists(css_path):
-        with open(css_path) as f:
+        with open(css_path, encoding="utf-8") as f:
             st.markdown(
                 f"<style>{f.read()}</style>",
                 unsafe_allow_html=True
@@ -36,7 +35,7 @@ def load_css():
 # Page Configuration
 # ==========================
 st.set_page_config(
-    page_title="InsightForge",
+    page_title="DataPilot",
     page_icon="📊",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -51,15 +50,15 @@ load_css()
 st.markdown(
     """
     <h1 style='text-align:center;color:#1E3A8A;'>
-        📊 InsightForge
+        📊 DataPilot
     </h1>
 
     <h4 style='text-align:center;color:gray;'>
-        AI-Powered Business Analytics Platform
+        A Generative AI-Powered Business Intelligence Assistant
     </h4>
 
     <p style='text-align:center;color:#6B7280;font-size:17px;'>
-        Upload • Clean • Analyze • Visualize • Forecast • Generate AI Insights
+        Upload • Analyze • Ask AI • Generate Reports
     </p>
 
     <hr>
@@ -73,21 +72,15 @@ st.markdown(
 # ==========================
 st.sidebar.markdown(
     """
-# 📊 InsightForge
+# 📊 DataPilot
 
-### AI-Powered Business Analytics
+### GenAI-Powered Data Analysis
 
 ---
 """
 )
 
-st.sidebar.success("Version 1.0")
 
-st.sidebar.caption(
-    "Built with ❤️ using Python, Streamlit & AI"
-)
-
-st.sidebar.markdown("---")
 
 
 # ==========================
@@ -110,9 +103,7 @@ if df is not None:
         [
             "📊 Overview",
             "📈 EDA",
-            "📉 Dashboard",
-            "🤖 AI Insights",
-            "📈 Forecasting",
+            "🤖 AI Insights & Q&A",
             "📄 Report"
         ]
     )
@@ -121,7 +112,6 @@ if df is not None:
     # Overview
     # ======================
     if page == "📊 Overview":
-
         show_overview(
             original_df=df,
             cleaned_df=cleaned_df,
@@ -132,29 +122,13 @@ if df is not None:
     # EDA
     # ======================
     elif page == "📈 EDA":
-
         show_eda(cleaned_df)
 
     # ======================
-    # Dashboard
+    # AI Insights & Q&A
     # ======================
-    elif page == "📉 Dashboard":
-
-        show_dashboard(cleaned_df)
-
-    # ======================
-    # AI Insights
-    # ======================
-    elif page == "🤖 AI Insights":
-
+    elif page == "🤖 AI Insights & Q&A":
         show_ai_page(cleaned_df)
-
-    # ======================
-    # Forecasting
-    # ======================
-    elif page == "📈 Forecasting":
-
-        show_forecasting(cleaned_df)
 
     # ======================
     # Report
@@ -163,7 +137,8 @@ if df is not None:
 
         show_report_page(
             cleaned_df,
-            cleaning_summary
+            cleaning_summary,
+            ai_report=st.session_state.get("ai_report")
         )
 
 else:
@@ -176,11 +151,10 @@ else:
 
 - 📂 Upload CSV / Excel Files
 - 🧹 Automatic Data Cleaning
-- 📊 Exploratory Data Analysis (EDA)
-- 📉 Interactive Dashboard
-- 🤖 AI Business Insights
-- 📈 Machine Learning Forecasting
-- 📄 Professional PDF Report
+- 📊 Dataset Summaries and Exploratory Analysis
+- 🤖 AI-Generated Business Insights
+- 💬 Natural-Language Questions About Your Data
+- 📄 Downloadable PDF Reports
 
 ---
 """

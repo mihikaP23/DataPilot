@@ -1,5 +1,7 @@
+
 import os
 from datetime import datetime
+from xml.sax.saxutils import escape
 
 from reportlab.lib import colors
 from reportlab.lib.styles import getSampleStyleSheet
@@ -22,25 +24,32 @@ class PDFReport:
     def __init__(self):
         reports_folder = "reports"
         os.makedirs(reports_folder, exist_ok=True)
+
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+
         self.filename = os.path.join(
             reports_folder,
-            f"InsightForge_Report_{timestamp}.pdf"
+            f"DataPilot_Report_{timestamp}.pdf"
         )
+
         self.styles = getSampleStyleSheet()
         self.story = []
+
     # =====================================================
     # TITLE
     # =====================================================
 
     def add_title(self):
+
         title = Paragraph(
-            "<b><font size=22>InsightForge</font></b>",
+            "<b><font size=22>DataPilot</font></b>",
             self.styles["Title"]
         )
 
         subtitle = Paragraph(
-            "<font size=14>AI-Powered Business Analytics Platform</font>",
+            "<font size=14>"
+            "A Generative AI-Powered Business Intelligence Assistant"
+            "</font>",
             self.styles["Heading2"]
         )
 
@@ -50,7 +59,8 @@ class PDFReport:
         )
 
         date = Paragraph(
-            f"Generated On : {datetime.now().strftime('%d %B %Y %I:%M %p')}",
+            f"Generated On: "
+            f"{datetime.now().strftime('%d %B %Y %I:%M %p')}",
             self.styles["Normal"]
         )
 
@@ -73,15 +83,10 @@ class PDFReport:
     def add_heading(self, heading):
 
         self.story.append(
-
             Paragraph(
-
-                f"<b>{heading}</b>",
-
+                f"<b>{escape(str(heading))}</b>",
                 self.styles["Heading2"]
-
             )
-
         )
 
         self.story.append(Spacer(1, 0.15 * inch))
@@ -92,32 +97,22 @@ class PDFReport:
 
     def add_table(self, data):
 
-        table = Table(data)
+        table = Table(data, repeatRows=1)
 
         table.setStyle(
-
             TableStyle([
-
                 ("BACKGROUND", (0, 0), (-1, 0), colors.darkblue),
-
                 ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
-
                 ("GRID", (0, 0), (-1, -1), 1, colors.black),
-
                 ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
-
                 ("BOTTOMPADDING", (0, 0), (-1, 0), 10),
-
                 ("BACKGROUND", (0, 1), (-1, -1), colors.beige),
-
-                ("ALIGN", (0, 0), (-1, -1), "CENTER")
-
+                ("ALIGN", (0, 0), (-1, -1), "CENTER"),
+                ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
             ])
-
         )
 
         self.story.append(table)
-
         self.story.append(Spacer(1, 0.30 * inch))
 
     # =====================================================
@@ -129,41 +124,23 @@ class PDFReport:
         self.add_heading("1. Dataset Overview")
 
         data = [
-
             ["Metric", "Value"],
-
-            ["Rows", df.shape[0]],
-
-            ["Columns", df.shape[1]],
-
-            ["Missing Values", int(df.isnull().sum().sum())],
-
-            ["Duplicate Rows", int(df.duplicated().sum())],
-
+            ["Rows", str(df.shape[0])],
+            ["Columns", str(df.shape[1])],
+            ["Missing Values", str(int(df.isnull().sum().sum()))],
+            ["Duplicate Rows", str(int(df.duplicated().sum()))],
             [
-
                 "Numeric Columns",
-
-                len(df.select_dtypes(include="number").columns)
-
+                str(len(df.select_dtypes(include="number").columns))
             ],
-
             [
-
                 "Categorical Columns",
-
-                len(
-
+                str(len(
                     df.select_dtypes(
-
-                        include=["object", "category"]
-
+                        include=["object", "category", "string"]
                     ).columns
-
-                )
-
+                ))
             ]
-
         ]
 
         self.add_table(data)
@@ -176,20 +153,14 @@ class PDFReport:
 
         self.add_heading("2. Data Cleaning Summary")
 
+        # Use safe defaults in case a summary field is unavailable.
         data = [
-
             ["Metric", "Value"],
-
-            ["Original Rows", summary["original_rows"]],
-
-            ["Original Columns", summary["original_columns"]],
-
-            ["Missing Before", summary["missing_before"]],
-
-            ["Missing After", summary["missing_after"]],
-
-            ["Duplicates Removed", summary["duplicates_removed"]]
-
+            ["Original Rows", str(summary.get("original_rows", "N/A"))],
+            ["Original Columns", str(summary.get("original_columns", "N/A"))],
+            ["Missing Before", str(summary.get("missing_before", "N/A"))],
+            ["Missing After", str(summary.get("missing_after", "N/A"))],
+            ["Duplicates Removed", str(summary.get("duplicates_removed", "N/A"))]
         ]
 
         self.add_table(data)
@@ -200,51 +171,33 @@ class PDFReport:
 
     def add_eda_summary(self, df):
 
-        self.add_heading("3. Exploratory Data Analysis")
+        self.add_heading("3. Dataset Analysis Summary")
 
         numeric = len(
-
             df.select_dtypes(include="number").columns
-
         )
 
         categorical = len(
-
             df.select_dtypes(
-
-                include=["object", "category"]
-
+                include=["object", "category", "string"]
             ).columns
-
         )
 
         memory = round(
-
-            df.memory_usage(
-
-                deep=True
-
-            ).sum() / (1024 * 1024),
-
+            df.memory_usage(deep=True).sum() / (1024 * 1024),
             2
-
         )
 
         data = [
-
             ["Metric", "Value"],
-
-            ["Numeric Columns", numeric],
-
-            ["Categorical Columns", categorical],
-
-            ["Memory Usage (MB)", memory]
-
+            ["Numeric Columns", str(numeric)],
+            ["Categorical Columns", str(categorical)],
+            ["Memory Usage (MB)", str(memory)]
         ]
 
         self.add_table(data)
 
-        # =====================================================
+    # =====================================================
     # AI INSIGHTS
     # =====================================================
 
@@ -252,59 +205,24 @@ class PDFReport:
 
         self.add_heading("4. AI Business Insights")
 
-        if not ai_report:
+        if not ai_report or not str(ai_report).strip():
+            ai_report = (
+                "AI insights have not been generated yet. "
+                "Please generate AI insights in the AI Insights "
+                "section before creating the report."
+            )
 
-            ai_report = "AI insights were not generated."
+        # Escape special XML characters before passing text to ReportLab.
+        safe_report = escape(str(ai_report))
+        safe_report = safe_report.replace("\n", "<br/>")
 
         paragraph = Paragraph(
-
-            ai_report.replace("\n", "<br/>"),
-
+            safe_report,
             self.styles["BodyText"]
-
         )
 
         self.story.append(paragraph)
-
         self.story.append(Spacer(1, 0.30 * inch))
-
-    # =====================================================
-    # FORECASTING RESULTS
-    # =====================================================
-
-    def add_forecasting_results(self, metrics):
-
-        self.add_heading("5. Forecasting Results")
-
-        if metrics is None:
-
-            data = [
-
-                ["Metric", "Value"],
-
-                ["Status", "Forecasting not executed"]
-
-            ]
-
-        else:
-
-            data = [
-
-                ["Metric", "Value"],
-
-                ["Model", "Linear Regression"],
-
-                ["R² Score", metrics["R2 Score"]],
-
-                ["MAE", metrics["MAE"]],
-
-                ["MSE", metrics["MSE"]],
-
-                ["RMSE", metrics["RMSE"]]
-
-            ]
-
-        self.add_table(data)
 
     # =====================================================
     # CONCLUSION
@@ -312,28 +230,23 @@ class PDFReport:
 
     def add_conclusion(self):
 
-        self.add_heading("6. Final Conclusion")
+        self.add_heading("5. Final Conclusion")
 
-        conclusion = """
-InsightForge successfully analyzed the uploaded dataset
-through automated data cleaning, exploratory data analysis,
-interactive visualization, AI-powered business insights,
-and machine learning forecasting.
-
-The generated insights can assist organizations in making
-data-driven business decisions while reducing manual effort.
-"""
+        conclusion = (
+            "DataPilot processes the uploaded dataset and provides "
+            "dataset summaries and AI-powered business insights. "
+            "Its natural-language question-answering functionality "
+            "helps users explore their data and understand relevant "
+            "patterns more easily. The generated report brings "
+            "together dataset information, cleaning details, and "
+            "AI-generated insights to support informed decisions."
+        )
 
         self.story.append(
-
             Paragraph(
-
-                conclusion,
-
+                escape(conclusion),
                 self.styles["BodyText"]
-
             )
-
         )
 
     # =====================================================
@@ -343,16 +256,14 @@ data-driven business decisions while reducing manual effort.
     def save(self):
 
         doc = SimpleDocTemplate(
-
-            self.filename
-
+            self.filename,
+            rightMargin=0.65 * inch,
+            leftMargin=0.65 * inch,
+            topMargin=0.65 * inch,
+            bottomMargin=0.65 * inch
         )
 
-        doc.build(
-
-            self.story
-
-        )
+        doc.build(self.story)
 
         return self.filename
 
@@ -362,37 +273,18 @@ data-driven business decisions while reducing manual effort.
 # ==========================================================
 
 def generate_pdf_report(
-
     df,
-
     cleaning_summary,
-
-    ai_report=None,
-
-    forecast_metrics=None
-
+    ai_report=None
 ):
 
     report = PDFReport()
 
     report.add_title()
-
     report.add_dataset_overview(df)
-
     report.add_cleaning_summary(cleaning_summary)
-
     report.add_eda_summary(df)
-
     report.add_ai_insights(ai_report)
-
-    report.add_forecasting_results(
-
-        forecast_metrics
-
-    )
-
     report.add_conclusion()
 
-    file_path = report.save()
-
-    return file_path
+    return report.save()
